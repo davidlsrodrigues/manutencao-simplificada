@@ -24,7 +24,21 @@ with tab_indicador:
     # indicadores de acordo com as data de inicio e fim
     df_indicadores = ms.indicadores(data_inicio, data_fim)
     
+    # indicadores da planta
+    st.caption('Métricas do conjunto de equipamentos')
+    mttr_media = round(df_indicadores['MTTR'].mean(), 2)
+    mtbf_media = round(df_indicadores['MTBF'].mean(), 2)
+    disponibilidade_media = round(df_indicadores['Disponibilidade'].mean(), 2)
+    total_numero_paradas = df_indicadores['Número Paradas'].sum()
+    
+    col_mttr, col_mtbf, col_disponibilidade, col_numero_paradas = st.columns(4)
+    col_mttr.metric('MTTR [h]', mttr_media)
+    col_mtbf.metric('MTBF [h]', mtbf_media)
+    col_disponibilidade.metric('Disponibilidade', disponibilidade_media)
+    col_numero_paradas.metric('Número Paradas', total_numero_paradas)
+    
     # dataframe com os dados
+    st.caption('Dados por equipamento')
     st.dataframe(df_indicadores, use_container_width=True)
 
 with tab_registro:
@@ -38,6 +52,6 @@ with tab_registro:
         if atualizar:
             try:
                 ms.set_dados(de_dados)
-                st.info('A tabela foi atualizada com sucesso. 	✅')
+                st.info('A tabela foi atualizada com sucesso.✅')
             except Exception as e:
                 st.error(e)
