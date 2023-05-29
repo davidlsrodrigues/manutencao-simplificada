@@ -1,5 +1,5 @@
-Equipamento,Descritivo,Data Abertura,Data Encerramento
-Máquina 1,Problema de superaquecimento no motor,10/01/2022 08:00:00,10/01/2022 13:30:00
+Equipamento,Descritivo,Abertura,Encerramento
+Máquina 1,Motor foi de arrasta pra cima,10/01/2022 08:00:00,10/01/2022 13:30:00
 Máquina 3,Falha elétrica no painel de controle,05/02/2022 15:45:00,06/02/2022 09:20:00
 Máquina 2,Vazamento de óleo no sistema hidráulico,12/03/2022 11:30:00,13/03/2022 14:10:00
 Máquina 4,Quebra de rolamento na esteira,18/04/2022 06:20:00,19/04/2022 11:50:00
@@ -12,4 +12,6 @@ Máquina 1,Problema no sensor de temperatura do motor,20/10/2022 10:30:00,21/10/
 Máquina 2,Pane elétrica no quadro de distribuição,30/11/2022 14:10:00,01/12/2022 08:20:00
 Máquina 4,Desgaste prematuro em engrenagem do redutor,18/12/2022 09:20:00,19/12/2022 16:45:00
 Máquina 1,Bloqueio no sistema de alimentação de matéria-prima,05/01/2023 13:40:00,06/01/2023 10:15:00
-Máquina 3,Problema de vazamento de ar comprimido,22/02/2023 11:00:00,23/02/2023 15:30:00
+Maquina 1,Montar o parabrisa,05/01/2023 13:40:00,05/02/2023 13:40:00
+Máquina 1,Montar o parabrisa,05/01/2023 13:40:00,05/02/2023 13:40:00
+Máquina 1,Montar o parabrisa,05/01/2023 13:40:00,

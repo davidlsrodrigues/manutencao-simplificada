@@ -15,8 +15,8 @@ tab_indicador, tab_registro = st.tabs(['Indicadores', 'Registros'])
 
 with tab_indicador:
     # periodo padrão de analise
-    data_inicio_dados = ms.get_dados_processados()['Data Abertura'].min()
-    data_fim_dados = ms.get_dados_processados()['Data Abertura'].max() + pd.Timedelta(days=1)
+    data_inicio_dados = ms.get_dados_processados()['Abertura'].min()
+    data_fim_dados = ms.get_dados_processados()['Encerramento'].max() + pd.Timedelta(days=1)
     data_analise = st.date_input('Período de análise', (data_inicio_dados, data_fim_dados))
     # converte para o formato data do pandas
     data_inicio = pd.to_datetime(data_analise[0])
@@ -42,16 +42,18 @@ with tab_indicador:
     st.dataframe(df_indicadores, use_container_width=True)
 
 with tab_registro:
-    # tabela editável
-    with st.form("tabela_editavel"):
+    with st.form("registro"):
         ms = Manu()
         dados = ms.get_dados()
-        de_dados = st.experimental_data_editor(dados, num_rows='dynamic', use_container_width=True)
+        st.dataframe(dados, use_container_width=True)
+        # input de texto para execução das funções
+        query = st.text_input('Função')
         
-        atualizar = st.form_submit_button("Atualizar")
+        atualizar = st.form_submit_button("Executar")
         if atualizar:
             try:
-                ms.set_dados(de_dados)
-                st.info('A tabela foi atualizada com sucesso.✅')
+                res = ms.alterar_tabela(query)
+                dados = ms.get_dados()
+                st.experimental_rerun()
             except Exception as e:
                 st.error(e)
