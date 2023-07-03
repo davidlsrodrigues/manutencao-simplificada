@@ -24,7 +24,7 @@ with tab_indicador:
     try:
         data_inicio_dados = ms.get_dados_processados()['Abertura'].min()
         data_hoje = pd.to_datetime('today', format='%d/%m/%Y')
-        data_analise = st.date_input('Período de análise', (data_inicio_dados, data_hoje))
+        data_analise = st.date_input('Período de análise', (data_inicio_dados, data_hoje), max_value=data_hoje)
     
     
         if len(data_analise) == 2:
@@ -74,7 +74,7 @@ with tab_indicador:
                 if ultima_manutencao == None:
                     dict_confiabilidade[equipamento] = [0]
                 else:
-                    delta_t = (data_fim - ultima_manutencao).total_seconds() / 3600
+                    delta_t = (data_hoje - ultima_manutencao).total_seconds() / 3600
                     taxa_falha = 1 / df_indicadores.loc[equipamento]['MTBF']
                     confiabilidade = round(math.e**(-delta_t*taxa_falha), 2)
                     dict_confiabilidade[equipamento] = [confiabilidade]
