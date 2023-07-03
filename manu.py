@@ -1,5 +1,4 @@
 import pandas as pd
-from unidecode import unidecode
 
 class Manu:
     
@@ -80,13 +79,14 @@ class Manu:
         df_dados_processados = df_dados_processados.reset_index()
         df_dados_processados['Abertura'] = pd.to_datetime(df_dados_processados['Abertura'], format="%d/%m/%Y %H:%M:%S")
         df_dados_processados['Encerramento'] = pd.to_datetime(df_dados_processados['Encerramento'], format="%d/%m/%Y %H:%M:%S")
+        df_dados_processados = df_dados_processados.sort_values(by='Encerramento')
         mt = df_dados_processados['Encerramento'] - df_dados_processados['Abertura']
         # converte o MT para horas no formato decimal.
         df_dados_processados['MT'] = mt.apply(lambda x: x.total_seconds() / 3600)
         return df_dados_processados
     
     def indicadores(self, data_inicio, data_fim):
-        dados = self.__df_dados_processados
+        dados = self.__df_dados_processados.dropna(subset='Encerramento')
         dados = dados.loc[(data_inicio <= dados['Abertura'])&(dados['Abertura'] < data_fim)]
         dict_mttr = {}
         dict_mtbf = {}
@@ -99,7 +99,7 @@ class Manu:
             dict_mttr[equipamento] = mttr
             if m >= 2:
                 tbf = (grupo['Abertura'].shift(-1) - grupo['Encerramento'])[:m-1]
-                mtbf = sum(tbf.apply(lambda x: x.total_seconds() / 3600)) / m
+                mtbf = sum(tbf.apply(lambda x: x.total_seconds() / 3600)) / (m - 1)
                 dict_mtbf[equipamento] = round(mtbf, 2)
                 dict_disponibilidade[equipamento] = round(mtbf/ (mttr+mtbf), 2)
             dict_paradas[equipamento] = m
